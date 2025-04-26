@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kate Balfe Art - Redesign</title>
+    <style>
+        :root {
+            --dark-bg: #1a1a1a;
+            --light-bg: #f5f5f5;
+            --accent: #e2726e;
+            --text-dark: #333;
+            --text-light: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--dark-bg);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .notification-bar {
+            background-color: var(--accent);
+            color: var(--text-light);
+            text-align: center;
+            padding: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .notification-bar a {
+            color: var(--text-light);
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 2rem;
+        }
+        
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        .hero {
+            position: relative;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: var(--text-light);
+            max-width: 800px;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 4px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--accent);
+            color: var(--text-light);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #d05c58;
+            transform: translateY(-2px);
+        }
+        
+        .gallery-section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+        
+        .galleries {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .gallery-card {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-card:hover .gallery-overlay {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+        }
+        
+        .gallery-title {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .gallery-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .newsletter {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .newsletter h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .newsletter-form button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--accent);
+            color: var(--text-light);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            margin: 1rem 0;
+        }
+        
+        .social-links a {
+            color: var(--text-light);
+            margin: 0 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            margin-top: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            margin: 0 0.5rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification-bar">
+        The print shop is closed until the next drop. <a href="#newsletter">Sign up for updates</a> to be notified of new drops, paintings, and shows.
+    </div>
+    
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">Kate Balfe</a>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <img src="/api/placeholder/1200/800" alt="Featured Art by Kate Balfe" class="hero-image">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Contemporary Art by Kate Balfe</h1>
+            <p>Explore a collection of vibrant paintings and prints inspired by nature, emotion, and the human experience.</p>
+            <a href="#" class="btn">Explore Artwork</a>
+        </div>
+    </section>
+    
+    <section class="gallery-section">
+        <div class="container">
+            <h2 class="section-title">Featured Collections</h2>
+            <div class="galleries">
+                <div class="gallery-card">
+                    <img src="/api/placeholder/600/800" alt="Paintings Collection">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Paintings</h3>
+                        <p class="gallery-desc">Original oil and acrylic works showcasing vibrant color palettes and emotional depth.</p>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="/api/placeholder/600/800" alt="The Year of Adverse Events Collection">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">The Year of Adverse Events</h3>
+                        <p class="gallery-desc">A focused collection exploring themes of resilience and transformation.</p>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="/api/placeholder/600/800" alt="Landscapes and Sketches Collection">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Landscapes and Sketches</h3>
+                        <p class="gallery-desc">Natural scenes and preliminary works showcasing technique and vision.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="newsletter" id="newsletter">
+        <div class="container">
+            <h2>Stay Updated</h2>
+            <p>Subscribe to my newsletter to receive updates about new artwork, upcoming exhibitions, and when the shop reopens.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#"><i class="fa fa-instagram"></i> Instagram</a>
+                <a href="#"><i class="fa fa-facebook"></i> Facebook</a>
+                <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+            </div>
+            <p>&copy; 2025 Kate Balfe. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
